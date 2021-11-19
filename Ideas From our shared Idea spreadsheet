@@ -1,5 +1,10 @@
-plant management system
-job search/application/networking tracker
-take out tinder 
+Plant management system
+-this will fuel my houseplant addiction, but, a management system for collectors for acquisition, care, auctioning/sales/flipping, propogation
+Job search/application/networking tracker
+-another group already did this durign software project management
+Take out tinder 
+-"idk this might be too big for the scope, and i was planning on using it for a project for my resume... but exactly what it sounds like. you have your own profile, db of your favorite foods. your friend logs on and the app will query each ones db for same/similar entries, then it provides choices until you both pick the same one. i was imagining kind of like a grid like those buzzfeed quizzes. been thinking about this for a while but the idea's not fully fleshed out in my head"
 Fair Meeting
+- An app where multiple people can put in their location and the app will determine a central location where everyone can meet up. If their are only 2 people it would be in the middle, if there were 3 people and 2 people were near one location and the 3rd was in another it would be closer to the 2 people, like they each have to drive 10 minutes and the other person would  drive 20 min. Personally I like the plant managment system Idea better, I just wanted to submit something.
 Reminders
+-An app that you can use to create customized reminders. The reminder object will be pretty general, and can be used as a superclass that other classes can extend when we think of more ideas.We can also implement reminder notifications via email or text (might be out of scope if we can't find a free service for this)
