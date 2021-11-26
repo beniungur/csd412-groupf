@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Plant_Management_System.Models;
 
 namespace Plant_Management_System.Data
 {
@@ -12,5 +13,6 @@ namespace Plant_Management_System.Data
             : base(options)
         {
         }
+        public DbSet<Plant> Plant { get; set; }
     }
 }
