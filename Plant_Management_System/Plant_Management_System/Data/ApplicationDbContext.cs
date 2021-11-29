@@ -18,5 +18,7 @@ namespace Plant_Management_System.Data
         public DbSet<Plant_Management_System.Models.Trade> Trade { get; set; }
         public DbSet<Plant_Management_System.Models.Sale> Sale { get; set; }
         public DbSet<Plant_Management_System.Models.User> User { get; set; }
+        public DbSet<CareLog> CareLog { get; set; }
+        public DbSet<Propogation> Propogation { get; set; }
     }
 }
