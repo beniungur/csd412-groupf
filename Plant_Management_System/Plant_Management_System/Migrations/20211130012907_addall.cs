@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
-namespace Plant_Management_System.Data.Migrations
+namespace Plant_Management_System.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class addall : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,11 +47,126 @@ namespace Plant_Management_System.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CareLog",
+                columns: table => new
+                {
+                    CareLogId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(nullable: false),
+                    CareDone = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CareLog", x => x.CareLogId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Plant",
+                columns: table => new
+                {
+                    PlantId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    WaterNeeds = table.Column<int>(nullable: false),
+                    LightNeeds = table.Column<int>(nullable: false),
+                    GrowthMedium = table.Column<int>(nullable: false),
+                    PotType = table.Column<int>(nullable: false),
+                    Rarity = table.Column<int>(nullable: false),
+                    Availability = table.Column<int>(nullable: false),
+                    LastRepotted = table.Column<DateTime>(nullable: false),
+                    CareLogId = table.Column<int>(nullable: false),
+                    OwnerId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Plant", x => x.PlantId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Propogation",
+                columns: table => new
+                {
+                    PropogationId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ParentPlantId = table.Column<int>(nullable: false),
+                    Type = table.Column<string>(nullable: true),
+                    DateStarted = table.Column<DateTime>(nullable: false),
+                    PropogationMedium = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Propogation", x => x.PropogationId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sale",
+                columns: table => new
+                {
+                    SaleId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlantId = table.Column<int>(nullable: false),
+                    ListPrice = table.Column<double>(nullable: false),
+                    Listing = table.Column<int>(nullable: false),
+                    DateSold = table.Column<DateTime>(nullable: false),
+                    PersonId = table.Column<int>(nullable: false),
+                    Buyer = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sale", x => x.SaleId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Trade",
+                columns: table => new
+                {
+                    TradeId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlantId = table.Column<int>(nullable: false),
+                    PersonId = table.Column<int>(nullable: false),
+                    ReceivingPlant = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Trade", x => x.TradeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    UserName = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WishList",
+                columns: table => new
+                {
+                    WishListId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PlantName = table.Column<string>(nullable: true),
+                    Budget = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WishList", x => x.WishListId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -73,7 +187,7 @@ namespace Plant_Management_System.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -209,6 +323,27 @@ namespace Plant_Management_System.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CareLog");
+
+            migrationBuilder.DropTable(
+                name: "Plant");
+
+            migrationBuilder.DropTable(
+                name: "Propogation");
+
+            migrationBuilder.DropTable(
+                name: "Sale");
+
+            migrationBuilder.DropTable(
+                name: "Trade");
+
+            migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
+                name: "WishList");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
