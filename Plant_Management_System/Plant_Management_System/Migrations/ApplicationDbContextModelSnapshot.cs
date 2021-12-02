@@ -310,8 +310,8 @@ namespace Plant_Management_System.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Buyer")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("BuyerUserId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateSold")
                         .HasColumnType("datetime2");
@@ -322,13 +322,14 @@ namespace Plant_Management_System.Migrations
                     b.Property<int>("Listing")
                         .HasColumnType("int");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PlantId")
+                    b.Property<int?>("SalePlantIdPlantId")
                         .HasColumnType("int");
 
                     b.HasKey("SaleId");
+
+                    b.HasIndex("BuyerUserId");
+
+                    b.HasIndex("SalePlantIdPlantId");
 
                     b.ToTable("Sale");
                 });
@@ -445,6 +446,17 @@ namespace Plant_Management_System.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Plant_Management_System.Models.Sale", b =>
+                {
+                    b.HasOne("Plant_Management_System.Models.User", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerUserId");
+
+                    b.HasOne("Plant_Management_System.Models.Plant", "SalePlantId")
+                        .WithMany()
+                        .HasForeignKey("SalePlantIdPlantId");
                 });
 #pragma warning restore 612, 618
         }

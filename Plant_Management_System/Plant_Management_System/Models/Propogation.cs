@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace Plant_Management_System.Models
 {
     public class Propogation
+        // fix spelling
     {
         public int PropogationId { get; set; }
         public int ParentPlantId { get; set; }
