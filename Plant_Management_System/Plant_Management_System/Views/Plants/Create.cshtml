@@ -19,42 +19,42 @@
             </div>
             <div class="form-group">
                 <label asp-for="WaterNeeds" class="control-label"></label>
-                <select asp-for="WaterNeeds" asp-items="Html.GetEnumSelectList<WaterNeed>()">
+                <select asp-for="WaterNeeds"  class="form-control" asp-items="Html.GetEnumSelectList<WaterNeed>()">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="WaterNeeds" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LightNeeds" class="control-label"></label>
-                <select asp-for="LightNeeds" asp-items="Html.GetEnumSelectList<LightNeed>()">
+                <select asp-for="LightNeeds"  class="form-control" asp-items="Html.GetEnumSelectList<LightNeed>()">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="LightNeeds" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="GrowthMedium" class="control-label"></label>
-                <select asp-for="GrowthMedium" asp-items="Html.GetEnumSelectList<GrowthMediums>()">
+                <select asp-for="GrowthMedium" class="form-control" asp-items="Html.GetEnumSelectList<GrowthMediums>()">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="GrowthMedium" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PotType" class="control-label"></label>
-                <select asp-for="PotType" asp-items="Html.GetEnumSelectList<PotTypes>()">
+                <select asp-for="PotType"  class="form-control" asp-items="Html.GetEnumSelectList<PotTypes>()">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="PotType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Rarity" class="control-label"></label>
-                <select asp-for="Rarity" asp-items="Html.GetEnumSelectList<Rarities>()">
+                <select asp-for="Rarity"  class="form-control" asp-items="Html.GetEnumSelectList<Rarities>()">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="Rarity" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Availability" class="control-label"></label>
-                <select asp-for="Availability" asp-items="Html.GetEnumSelectList<Availabilities>()">
+                <select asp-for="Availability"  class="form-control" asp-items="Html.GetEnumSelectList<Availabilities>()">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="Availability" class="text-danger"></span>
