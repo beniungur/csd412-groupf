@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Plant_Management_System.Models.Propagation>
+﻿@model IEnumerable<Plant_Management_System.Models.Propogation>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ParentPlant)
+                @Html.DisplayNameFor(model => model.ParentPlantId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Type)
@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.DateStarted)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PropagationMedium)
+                @Html.DisplayNameFor(model => model.PropogationMedium)
             </th>
             <th></th>
         </tr>
@@ -31,7 +31,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ParentPlant)
+                @Html.DisplayFor(modelItem => item.ParentPlantId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
@@ -40,12 +40,12 @@
                 @Html.DisplayFor(modelItem => item.DateStarted)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PropagationMedium)
+                @Html.DisplayFor(modelItem => item.PropogationMedium)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PropagationId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PropagationId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PropagationId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.PropogationId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PropogationId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PropogationId">Delete</a>
             </td>
         </tr>
 }

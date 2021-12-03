@@ -1,21 +1,20 @@
-﻿@model Plant_Management_System.Models.Propagation
+﻿@model Plant_Management_System.Models.Propogation
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Delete</h1>
+<h1>Details</h1>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>Propogation</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ParentPlant)
+            @Html.DisplayNameFor(model => model.ParentPlantId)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ParentPlant)
+            @Html.DisplayFor(model => model.ParentPlantId)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Type)
@@ -30,16 +29,14 @@
             @Html.DisplayFor(model => model.DateStarted)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PropagationMedium)
+            @Html.DisplayNameFor(model => model.PropogationMedium)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PropagationMedium)
+            @Html.DisplayFor(model => model.PropogationMedium)
         </dd>
     </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="PropagationId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PropogationId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
 </div>

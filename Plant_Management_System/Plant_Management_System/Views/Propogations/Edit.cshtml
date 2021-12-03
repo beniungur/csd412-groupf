@@ -1,4 +1,4 @@
-﻿@model Plant_Management_System.Models.Propagation
+﻿@model Plant_Management_System.Models.Propogation
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,11 +12,11 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="PropagationId" />
+            <input type="hidden" asp-for="PropogationId" />
             <div class="form-group">
-                <label asp-for="ParentPlant" class="control-label"></label>
-                <input asp-for="ParentPlant" class="form-control" />
-                <span asp-validation-for="ParentPlant" class="text-danger"></span>
+                <label asp-for="ParentPlantId" class="control-label"></label>
+                <input asp-for="ParentPlantId" class="form-control" />
+                <span asp-validation-for="ParentPlantId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
@@ -29,9 +29,9 @@
                 <span asp-validation-for="DateStarted" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PropagationMedium" class="control-label"></label>
-                <input asp-for="PropagationMedium" class="form-control" />
-                <span asp-validation-for="PropagationMedium" class="text-danger"></span>
+                <label asp-for="PropogationMedium" class="control-label"></label>
+                <input asp-for="PropogationMedium" class="form-control" />
+                <span asp-validation-for="PropogationMedium" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

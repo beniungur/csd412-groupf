@@ -10,22 +10,22 @@ using Plant_Management_System.Models;
 
 namespace Plant_Management_System.Controllers
 {
-    public class PropagationsController : Controller
+    public class PropogationsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PropagationsController(ApplicationDbContext context)
+        public PropogationsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Propagations
+        // GET: Propogations
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Propagation.ToListAsync());
+            return View(await _context.Propogation.ToListAsync());
         }
 
-        // GET: Propagations/Details/5
+        // GET: Propogations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var propagation = await _context.Propagation
-                .FirstOrDefaultAsync(m => m.PropagationId == id);
-            if (propagation == null)
+            var propogation = await _context.Propogation
+                .FirstOrDefaultAsync(m => m.PropogationId == id);
+            if (propogation == null)
             {
                 return NotFound();
             }
 
-            return View(propagation);
+            return View(propogation);
         }
 
-        // GET: Propagations/Create
+        // GET: Propogations/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Propagations/Create
+        // POST: Propogations/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PropagationId,ParentPlantId,Type,DateStarted,PropagationMedium")] Propagation propagation)
+        public async Task<IActionResult> Create([Bind("PropogationId,ParentPlantId,Type,DateStarted,PropogationMedium")] Propagation propogation)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(propagation);
+                _context.Add(propogation);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(propagation);
+            return View(propogation);
         }
 
-        // GET: Propagations/Edit/5
+        // GET: Propogations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var propagation = await _context.Propagation.FindAsync(id);
-            if (propagation == null)
+            var propogation = await _context.Propogation.FindAsync(id);
+            if (propogation == null)
             {
                 return NotFound();
             }
-            return View(propagation);
+            return View(propogation);
         }
 
-        // POST: Propagations/Edit/5
+        // POST: Propogations/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PropagationId,ParentPlantId,Type,DateStarted,PropagationMedium")] Propagation propagation)
+        public async Task<IActionResult> Edit(int id, [Bind("PropogationId,ParentPlantId,Type,DateStarted,PropogationMedium")] Propagation propogation)
         {
-            if (id != propagation.PropagationId)
+            if (id != propogation.PropogationId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Plant_Management_System.Controllers
             {
                 try
                 {
-                    _context.Update(propagation);
+                    _context.Update(propogation);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PropagationExists(propagation.PropagationId))
+                    if (!PropogationExists(propogation.PropogationId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Plant_Management_System.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(propagation);
+            return View(propogation);
         }
 
-        // GET: Propagations/Delete/5
+        // GET: Propogations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var propagation = await _context.Propagation
-                .FirstOrDefaultAsync(m => m.PropagationId == id);
-            if (propagation == null)
+            var propogation = await _context.Propogation
+                .FirstOrDefaultAsync(m => m.PropogationId == id);
+            if (propogation == null)
             {
                 return NotFound();
             }
 
-            return View(propagation);
+            return View(propogation);
         }
 
-        // POST: Propagations/Delete/5
+        // POST: Propogations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var propagation = await _context.Propagation.FindAsync(id);
-            _context.Propagation.Remove(propagation);
+            var propogation = await _context.Propogation.FindAsync(id);
+            _context.Propogation.Remove(propogation);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PropagationExists(int id)
+        private bool PropogationExists(int id)
         {
-            return _context.Propagation.Any(e => e.PropagationId == id);
+            return _context.Propogation.Any(e => e.PropogationId == id);
         }
     }
 }

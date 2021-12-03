@@ -279,9 +279,9 @@ namespace Plant_Management_System.Migrations
                     b.ToTable("Plant");
                 });
 
-            modelBuilder.Entity("Plant_Management_System.Models.Propagation", b =>
+            modelBuilder.Entity("Plant_Management_System.Models.Propogation", b =>
                 {
-                    b.Property<int>("PropagationId")
+                    b.Property<int>("PropogationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -289,20 +289,18 @@ namespace Plant_Management_System.Migrations
                     b.Property<DateTime>("DateStarted")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ParentPlantPlantId")
+                    b.Property<int>("ParentPlantId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PropagationMedium")
+                    b.Property<string>("PropogationMedium")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PropagationId");
+                    b.HasKey("PropogationId");
 
-                    b.HasIndex("ParentPlantPlantId");
-
-                    b.ToTable("Propagation");
+                    b.ToTable("Propogation");
                 });
 
             modelBuilder.Entity("Plant_Management_System.Models.Sale", b =>
@@ -447,13 +445,6 @@ namespace Plant_Management_System.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Plant_Management_System.Models.Propagation", b =>
-                {
-                    b.HasOne("Plant_Management_System.Models.Plant", "ParentPlant")
-                        .WithMany()
-                        .HasForeignKey("ParentPlantPlantId");
                 });
 #pragma warning restore 612, 618
         }
