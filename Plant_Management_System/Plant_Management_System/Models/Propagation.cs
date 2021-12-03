@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace Plant_Management_System.Models
 {
-    public class Propogation
+    public class Propagation
     {
-        public int PropogationId { get; set; }
-        public int ParentPlantId { get; set; }
+        public int PropagationId { get; set; }
+        public Plant ParentPlant { get; set; }
         public string Type { get; set; }
         public DateTime DateStarted { get; set; }
         public string PropogationMedium { get; set; }

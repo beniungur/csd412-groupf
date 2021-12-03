@@ -11,7 +11,7 @@ namespace Plant_Management_System_Unit_Tests
 		public void PropagationTypeCheck()
 		{
 			string newType = "Special Plant Prop";
-			Propogation propagationType = new Propogation();
+			Propagation propagationType = new Propagation();
 
 			propagationType.Type = newType;
 
@@ -24,7 +24,7 @@ namespace Plant_Management_System_Unit_Tests
 		[InlineData("", "")]
 		public void PropagationTypeAcceptsAllValues(String newType, string expected)
 		{
-			Propogation propagationType = new Propogation();
+			Propagation propagationType = new Propagation();
 
             propagationType.Type = newType;
 

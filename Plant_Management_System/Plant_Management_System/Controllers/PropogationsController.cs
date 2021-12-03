@@ -54,7 +54,7 @@ namespace Plant_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PropogationId,ParentPlantId,Type,DateStarted,PropogationMedium")] Propogation propogation)
+        public async Task<IActionResult> Create([Bind("PropogationId,ParentPlantId,Type,DateStarted,PropogationMedium")] Propagation propogation)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace Plant_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PropogationId,ParentPlantId,Type,DateStarted,PropogationMedium")] Propogation propogation)
+        public async Task<IActionResult> Edit(int id, [Bind("PropogationId,ParentPlantId,Type,DateStarted,PropogationMedium")] Propagation propogation)
         {
             if (id != propogation.PropogationId)
             {
