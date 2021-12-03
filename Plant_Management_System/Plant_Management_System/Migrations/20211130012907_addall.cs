@@ -83,19 +83,19 @@ namespace Plant_Management_System.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Propogation",
+                name: "Propagation",
                 columns: table => new
                 {
-                    PropogationId = table.Column<int>(nullable: false)
+                    PropagationId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ParentPlantId = table.Column<int>(nullable: false),
                     Type = table.Column<string>(nullable: true),
                     DateStarted = table.Column<DateTime>(nullable: false),
-                    PropogationMedium = table.Column<string>(nullable: true)
+                    PropagationMedium = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Propogation", x => x.PropogationId);
+                    table.PrimaryKey("PK_Propagation", x => x.PropagationId);
                 });
 
             migrationBuilder.CreateTable(
@@ -331,7 +331,7 @@ namespace Plant_Management_System.Migrations
                 name: "Plant");
 
             migrationBuilder.DropTable(
-                name: "Propogation");
+                name: "Propagation");
 
             migrationBuilder.DropTable(
                 name: "Sale");

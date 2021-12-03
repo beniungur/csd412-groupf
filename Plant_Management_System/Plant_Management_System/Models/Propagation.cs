@@ -11,6 +11,6 @@ namespace Plant_Management_System.Models
         public Plant ParentPlant { get; set; }
         public string Type { get; set; }
         public DateTime DateStarted { get; set; }
-        public string PropogationMedium { get; set; }
+        public string PropagationMedium { get; set; }
     }
 }
