@@ -1,0 +1,74 @@
+﻿@model Plant_Management_System.Models.SaleEventView
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>SaleEvent</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Plant to Sell</label>
+                <select asp-for="SalePlant" class="form-control">
+                    @foreach (var plant in Model.PlantList)
+                    {
+                        <option value=@plant.PlantId>@plant.Name</option>
+}
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="sale.ListPrice" class="control-label"></label>
+                <input asp-for="sale.ListPrice" class="form-control" />
+                <span asp-validation-for="sale.ListPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sale.Listing" class="control-label"></label>
+                <select asp-for="sale.Listing" class="form-control" asp-items="Html.GetEnumSelectList<ListingType>()">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="sale.Listing" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sale.DateListed" class="control-label"></label>
+                <input asp-for="sale.DateListed" class="form-control" />
+                <span asp-validation-for="sale.DateListed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sale.DateSold" class="control-label"></label>
+                <input asp-for="sale.DateSold" class="form-control" />
+                <span asp-validation-for="sale.DateSold" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Sold To</label>
+                <select asp-for="BuyerId" class="form-control">
+                    @foreach (var buyer in Model.BuyerList)
+                    {
+                        // Get the best name for the borrower since first and last name might not be complete yet
+                        string name = buyer.FullName();
+                        if (name == " ")
+                        {
+                            name = buyer.UserName;
+                        }
+                <option value=@buyer.Id>@name</option>
+            }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

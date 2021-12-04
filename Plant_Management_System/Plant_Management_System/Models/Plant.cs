@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace Plant_Management_System.Models
 {
     public enum WaterNeed
@@ -16,17 +15,19 @@ namespace Plant_Management_System.Models
     }
     public enum LightNeed
     {
-        Direct,
-        Indirect,
-        Minimal
+        High,
+        Medium,
+        Low
     }
     public enum GrowthMediums
     {
+        [Description("Soil")]
         Soil,
-        [Display(Name = "Aroid-mix")]
+        [Description("Aroid-mix")]
         AroidMix,
-        [Display(Name = "Cactus-Mix")]
+        [Description("Cactus-Mix")]
         CactusMix,
+        [Description("Soilless")]
         Soilless
     }
     public enum PotTypes
@@ -39,36 +40,32 @@ namespace Plant_Management_System.Models
     public enum Rarities
     {
         Rare,
-        [Display(Name = "Semi-Rare")]
+        [Description("Semi-Rare")]
         SemiRare,
         Common
     }
     public enum Availabilities
     {
-        [Display(Name = "Not For Sale")]
-        NotForSale,
-        [Display(Name = "For Sale")]
-        ForSale
+        [Description("Not For Sale")]
+        NFS,
+        [Description("For Sale")]
+        FS
     }
 
     public class Plant
     {
         public int PlantId { get; set; }
         public string Name { get; set; }
-        [Display(Name = "Water Needs")]
         public WaterNeed WaterNeeds { get; set; }
-        [Display(Name = "Light Needs")]
         public LightNeed LightNeeds { get; set; }
-        [Display(Name = "Growth Medium")]
         public GrowthMediums GrowthMedium { get; set; }
-        [Display(Name = "Pot Type")]
         public PotTypes PotType { get; set; }
         public Rarities Rarity { get; set; }
         public Availabilities Availability { get; set; }
+
         [DataType(DataType.Date)]
-        [Display(Name = "Last Repotted")]
         public DateTime LastRepotted { get; set; }
         public int CareLogId { get; set; }
-        public int OwnerId { get; set; }
+        public AppUser Owner { get; set; }
     }
 }

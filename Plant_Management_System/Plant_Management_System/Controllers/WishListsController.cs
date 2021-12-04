@@ -54,7 +54,7 @@ namespace Plant_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("WishListId,PlantName,Budget")] WishList wishList)
+        public async Task<IActionResult> Create([Bind("WishListId,DateAdded,PlantName,Budget")] WishList wishList)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace Plant_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("WishListId,PlantName,Budget")] WishList wishList)
+        public async Task<IActionResult> Edit(int id, [Bind("WishListId,DateAdded,PlantName,Budget")] WishList wishList)
         {
             if (id != wishList.WishListId)
             {
