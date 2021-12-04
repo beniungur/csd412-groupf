@@ -12,7 +12,7 @@ namespace Plant_Management_System_Unit_Tests
 		public void UserNameCheck()
 		{
 			string newFirstName = "Bobloblaw";
-			User userFirstName = new User();
+			AppUser userFirstName = new AppUser();
 
 			userFirstName.FirstName = newFirstName;
 
@@ -25,7 +25,7 @@ namespace Plant_Management_System_Unit_Tests
 		[InlineData("", "")]
 		public void UserFirstNameAcceptsAllValues(String newFirstName, string expected)
 		{
-			User userFirstName = new User();
+			AppUser userFirstName = new AppUser();
 
 			userFirstName.FirstName = newFirstName;
 

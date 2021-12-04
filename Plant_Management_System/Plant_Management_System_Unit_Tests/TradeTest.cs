@@ -11,25 +11,25 @@ namespace Plant_Management_System_Unit_Tests
 		[Fact]
 		public void TradeReceivingPlantCheck()
 		{
-			string newReceivingPlant = "Special Plant";
-			Trade tradeReceivingPlant = new Trade();
+			int newId = 1;
+			TradeEvent tradeReceivingPlant = new TradeEvent();
 
-			tradeReceivingPlant.ReceivingPlant = newReceivingPlant;
+			tradeReceivingPlant.Id = newId;
 
-			Assert.Equal(tradeReceivingPlant.ReceivingPlant, newReceivingPlant);
+			Assert.Equal(tradeReceivingPlant.Id, newId);
 		}
 
 		[Theory]
-		[InlineData("Special Plant", "Special Plant")]
-		[InlineData("Fern", "Fern")]
-		[InlineData("", "")]
-		public void TradeReceivingPlantAcceptsAllValues(String newReceivingPlant, string expected)
+		[InlineData(1, 1)]
+		[InlineData(2, 2)]
+		[InlineData(3, 3)]
+		public void TradeReceivingPlantAcceptsAllValues(int newId, int expected)
 		{
-			Trade tradeReceivingPlant = new Trade();
+			TradeEvent tradeReceivingPlant = new TradeEvent();
 
-			tradeReceivingPlant.ReceivingPlant = newReceivingPlant;
-
-			Assert.Equal(tradeReceivingPlant.ReceivingPlant, expected);
+			tradeReceivingPlant.Id = newId;
+			
+			Assert.Equal(tradeReceivingPlant.Id, expected);
 		}
 	}
 }

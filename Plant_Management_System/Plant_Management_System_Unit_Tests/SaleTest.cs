@@ -11,7 +11,7 @@ namespace Plant_Management_System_Unit_Tests
 		public void SalePriceCheck()
 		{
 			double newListPrice = 20.00;
-			Sale SaleListPrice = new Sale();
+			SaleEvent SaleListPrice = new SaleEvent();
 
 			SaleListPrice.ListPrice = newListPrice;
 
@@ -24,7 +24,7 @@ namespace Plant_Management_System_Unit_Tests
 		[InlineData(0,0 )]
 		public void SaleListPriceAcceptsAllNumbers(double newListPrice, double expected)
 		{
-			Sale SaleListPrice = new Sale();
+			SaleEvent SaleListPrice = new SaleEvent();
 
 			SaleListPrice.ListPrice = newListPrice;
 
