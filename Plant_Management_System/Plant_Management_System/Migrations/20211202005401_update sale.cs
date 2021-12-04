@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Plant_Management_System.Migrations
 {
-    public partial class addall : Migration
+    public partial class updatesale : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -96,24 +96,6 @@ namespace Plant_Management_System.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Propagation", x => x.PropagationId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Sale",
-                columns: table => new
-                {
-                    SaleId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PlantId = table.Column<int>(nullable: false),
-                    ListPrice = table.Column<double>(nullable: false),
-                    Listing = table.Column<int>(nullable: false),
-                    DateSold = table.Column<DateTime>(nullable: false),
-                    PersonId = table.Column<int>(nullable: false),
-                    Buyer = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Sale", x => x.SaleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -267,6 +249,35 @@ namespace Plant_Management_System.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Sale",
+                columns: table => new
+                {
+                    SaleId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SalePlantIdPlantId = table.Column<int>(nullable: true),
+                    ListPrice = table.Column<double>(nullable: false),
+                    Listing = table.Column<int>(nullable: false),
+                    DateSold = table.Column<DateTime>(nullable: false),
+                    BuyerUserId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sale", x => x.SaleId);
+                    table.ForeignKey(
+                        name: "FK_Sale_User_BuyerUserId",
+                        column: x => x.BuyerUserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Sale_Plant_SalePlantIdPlantId",
+                        column: x => x.SalePlantIdPlantId,
+                        principalTable: "Plant",
+                        principalColumn: "PlantId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -305,6 +316,16 @@ namespace Plant_Management_System.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sale_BuyerUserId",
+                table: "Sale",
+                column: "BuyerUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sale_SalePlantIdPlantId",
+                table: "Sale",
+                column: "SalePlantIdPlantId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -340,9 +361,6 @@ namespace Plant_Management_System.Migrations
                 name: "Trade");
 
             migrationBuilder.DropTable(
-                name: "User");
-
-            migrationBuilder.DropTable(
                 name: "WishList");
 
             migrationBuilder.DropTable(
@@ -350,6 +368,12 @@ namespace Plant_Management_System.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Plant");
         }
     }
 }

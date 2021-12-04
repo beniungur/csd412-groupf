@@ -9,9 +9,9 @@ namespace Plant_Management_System.Models
     {
         public int TradeId { get; set; }
 
-        public int PlantId { get; set; }
+        public Plant TradePlant { get; set; }
 
-        public int PersonId { get; set; }
+        public User TradeTo { get; set; }
 
         public string ReceivingPlant { get; set; }
     }

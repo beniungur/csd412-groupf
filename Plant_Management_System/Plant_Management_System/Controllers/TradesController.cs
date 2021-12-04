@@ -54,7 +54,7 @@ namespace Plant_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TradeId,PlantId,PersonId,ReceivingPlant")] Trade trade)
+        public async Task<IActionResult> Create([Bind("TradeId,ReceivingPlant")] Trade trade)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace Plant_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TradeId,PlantId,PersonId,ReceivingPlant")] Trade trade)
+        public async Task<IActionResult> Edit(int id, [Bind("TradeId,ReceivingPlant")] Trade trade)
         {
             if (id != trade.TradeId)
             {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Plant_Management_System.Data;
 
 namespace Plant_Management_System.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211202005401_update sale")]
+    partial class updatesale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,9 +281,9 @@ namespace Plant_Management_System.Migrations
                     b.ToTable("Plant");
                 });
 
-            modelBuilder.Entity("Plant_Management_System.Models.Propagation", b =>
+            modelBuilder.Entity("Plant_Management_System.Models.Propogation", b =>
                 {
-                    b.Property<int>("PropagationId")
+                    b.Property<int>("PropogationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -289,20 +291,18 @@ namespace Plant_Management_System.Migrations
                     b.Property<DateTime>("DateStarted")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ParentPlantPlantId")
+                    b.Property<int>("ParentPlantId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PropagationMedium")
+                    b.Property<string>("PropogationMedium")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PropagationId");
+                    b.HasKey("PropogationId");
 
-                    b.HasIndex("ParentPlantPlantId");
-
-                    b.ToTable("Propagation");
+                    b.ToTable("Propogation");
                 });
 
             modelBuilder.Entity("Plant_Management_System.Models.Sale", b =>
@@ -343,20 +343,16 @@ namespace Plant_Management_System.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlantId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ReceivingPlant")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TradePlantPlantId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TradeToUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("TradeId");
-
-                    b.HasIndex("TradePlantPlantId");
-
-                    b.HasIndex("TradeToUserId");
 
                     b.ToTable("Trade");
                 });
@@ -463,17 +459,6 @@ namespace Plant_Management_System.Migrations
                     b.HasOne("Plant_Management_System.Models.Plant", "SalePlantId")
                         .WithMany()
                         .HasForeignKey("SalePlantIdPlantId");
-                });
-
-            modelBuilder.Entity("Plant_Management_System.Models.Trade", b =>
-                {
-                    b.HasOne("Plant_Management_System.Models.Plant", "TradePlant")
-                        .WithMany()
-                        .HasForeignKey("TradePlantPlantId");
-
-                    b.HasOne("Plant_Management_System.Models.User", "TradeTo")
-                        .WithMany()
-                        .HasForeignKey("TradeToUserId");
                 });
 #pragma warning restore 612, 618
         }
