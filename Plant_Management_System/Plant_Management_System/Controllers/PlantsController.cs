@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +15,21 @@ namespace Plant_Management_System.Controllers
     public class PlantsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<AppUser> _userManager;
 
-        public PlantsController(ApplicationDbContext context)
+        public PlantsController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Plants
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Plant.ToListAsync());
+            // only want it to display your plants
+            AppUser owner = await _userManager.GetUserAsync(User);
+            //return View(await _context.Plant.ToListAsync());
+            return View(await _context.Plant.Where(o => o.Owner == owner).ToListAsync());
         }
 
         // GET: Plants/Details/5
@@ -43,6 +50,7 @@ namespace Plant_Management_System.Controllers
             return View(plant);
         }
 
+        [Authorize]
         // GET: Plants/Create
         public IActionResult Create()
         {
@@ -52,12 +60,15 @@ namespace Plant_Management_System.Controllers
         // POST: Plants/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlantId,Name,WaterNeeds,LightNeeds,GrowthMedium,PotType,Rarity,LastRepotted,Availability,CareLogId,OwnerId")] Plant plant)
+        public async Task<IActionResult> Create([Bind("PlantId,Name,WaterNeeds,LightNeeds,GrowthMedium,PotType,Rarity,Availability,LastRepotted,CareLogId")] Plant plant)
         {
             if (ModelState.IsValid)
             {
+                //added
+                plant.Owner = await _userManager.GetUserAsync(User);
                 _context.Add(plant);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,6 +77,7 @@ namespace Plant_Management_System.Controllers
         }
 
         // GET: Plants/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,9 +96,10 @@ namespace Plant_Management_System.Controllers
         // POST: Plants/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PlantId,Name,WaterNeeds,LightNeeds,GrowthMedium,PotType,Rarity,LastRepotted,Availability,CareLogId,OwnerId")] Plant plant)
+        public async Task<IActionResult> Edit(int id, [Bind("PlantId,Name,WaterNeeds,LightNeeds,GrowthMedium,PotType,Rarity,Availability,LastRepotted,CareLogId")] Plant plant)
         {
             if (id != plant.PlantId)
             {
@@ -117,6 +130,7 @@ namespace Plant_Management_System.Controllers
         }
 
         // GET: Plants/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +149,7 @@ namespace Plant_Management_System.Controllers
         }
 
         // POST: Plants/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

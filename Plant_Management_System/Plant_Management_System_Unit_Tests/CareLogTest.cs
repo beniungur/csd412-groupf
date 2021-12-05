@@ -11,8 +11,8 @@ namespace Plant_Management_System_Unit_Tests
 		[Fact]
 		public void CareLogCareCheck()
 		{
-			string newCareDone = "Changed Soil";
-			CareLog careDone = new CareLog();
+			CareTasks newCareDone = CareTasks.Water;
+			CareLogEvent careDone = new CareLogEvent();
 
 			careDone.CareDone = newCareDone;
 
@@ -20,12 +20,12 @@ namespace Plant_Management_System_Unit_Tests
 		}
 
 		[Theory]
-		[InlineData("Changed Soil", "Changed Soil")]
-		[InlineData("Watered Plant", "Watered Plant")]
-		[InlineData("", "")]
-		public void CareLogAcceptsAllValues(String newCareDone, string expected)
+		[InlineData(CareTasks.Water, CareTasks.Water)]
+		[InlineData(CareTasks.Clean, CareTasks.Clean)]
+		[InlineData(CareTasks.Prune, CareTasks.Prune)]
+		public void CareLogAcceptsAllValues(CareTasks newCareDone, CareTasks expected)
 		{
-			CareLog careDone = new CareLog();
+			CareLogEvent careDone = new CareLogEvent();
 
 			careDone.CareDone = newCareDone;
 
