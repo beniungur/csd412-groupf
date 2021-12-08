@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Plant_Management_System.Data;
 
-namespace Plant_Management_System.Data.Migrations
+namespace Plant_Management_System.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211204092302_updatecont")]
-    partial class updatecont
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,6 +225,34 @@ namespace Plant_Management_System.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Plant_Management_System.Models.CareLogEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CareDone")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateOfCare")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("PlantNamePlantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("PlantNamePlantId");
+
+                    b.ToTable("CareLogEvent");
+                });
+
             modelBuilder.Entity("Plant_Management_System.Models.Plant", b =>
                 {
                     b.Property<int>("PlantId")
@@ -240,6 +266,9 @@ namespace Plant_Management_System.Data.Migrations
                     b.Property<int>("CareLogId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("GrowthMedium")
                         .HasColumnType("int");
 
@@ -252,7 +281,10 @@ namespace Plant_Management_System.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OwnerId")
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OwnerId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PotType")
@@ -266,7 +298,7 @@ namespace Plant_Management_System.Data.Migrations
 
                     b.HasKey("PlantId");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("OwnerId1");
 
                     b.ToTable("Plant");
                 });
@@ -294,6 +326,101 @@ namespace Plant_Management_System.Data.Migrations
                     b.HasIndex("ParentPlantPlantId");
 
                     b.ToTable("PropagationEvent");
+                });
+
+            modelBuilder.Entity("Plant_Management_System.Models.SaleEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BuyerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateListed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateSold")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("ListPrice")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Listing")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("PlantForSalePlantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuyerId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("PlantForSalePlantId");
+
+                    b.ToTable("SaleEvent");
+                });
+
+            modelBuilder.Entity("Plant_Management_System.Models.TradeEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("PlantToReceivePlantId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PlantToTradePlantId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TradeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TradeToId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("PlantToReceivePlantId");
+
+                    b.HasIndex("PlantToTradePlantId");
+
+                    b.HasIndex("TradeToId");
+
+                    b.ToTable("TradeEvent");
+                });
+
+            modelBuilder.Entity("Plant_Management_System.Models.WishList", b =>
+                {
+                    b.Property<int>("WishListId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Budget")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PlantName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("WishListId");
+
+                    b.ToTable("WishList");
                 });
 
             modelBuilder.Entity("Plant_Management_System.Models.AppUser", b =>
@@ -360,11 +487,22 @@ namespace Plant_Management_System.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Plant_Management_System.Models.Plant", b =>
+            modelBuilder.Entity("Plant_Management_System.Models.CareLogEvent", b =>
                 {
                     b.HasOne("Plant_Management_System.Models.AppUser", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId");
+
+                    b.HasOne("Plant_Management_System.Models.Plant", "PlantName")
+                        .WithMany()
+                        .HasForeignKey("PlantNamePlantId");
+                });
+
+            modelBuilder.Entity("Plant_Management_System.Models.Plant", b =>
+                {
+                    b.HasOne("Plant_Management_System.Models.AppUser", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId1");
                 });
 
             modelBuilder.Entity("Plant_Management_System.Models.PropagationEvent", b =>
@@ -376,6 +514,40 @@ namespace Plant_Management_System.Data.Migrations
                     b.HasOne("Plant_Management_System.Models.Plant", "ParentPlant")
                         .WithMany()
                         .HasForeignKey("ParentPlantPlantId");
+                });
+
+            modelBuilder.Entity("Plant_Management_System.Models.SaleEvent", b =>
+                {
+                    b.HasOne("Plant_Management_System.Models.AppUser", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerId");
+
+                    b.HasOne("Plant_Management_System.Models.AppUser", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.HasOne("Plant_Management_System.Models.Plant", "PlantForSale")
+                        .WithMany()
+                        .HasForeignKey("PlantForSalePlantId");
+                });
+
+            modelBuilder.Entity("Plant_Management_System.Models.TradeEvent", b =>
+                {
+                    b.HasOne("Plant_Management_System.Models.AppUser", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.HasOne("Plant_Management_System.Models.Plant", "PlantToReceive")
+                        .WithMany()
+                        .HasForeignKey("PlantToReceivePlantId");
+
+                    b.HasOne("Plant_Management_System.Models.Plant", "PlantToTrade")
+                        .WithMany()
+                        .HasForeignKey("PlantToTradePlantId");
+
+                    b.HasOne("Plant_Management_System.Models.AppUser", "TradeTo")
+                        .WithMany()
+                        .HasForeignKey("TradeToId");
                 });
 #pragma warning restore 612, 618
         }

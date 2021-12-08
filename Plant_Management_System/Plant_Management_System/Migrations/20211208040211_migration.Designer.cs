@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Plant_Management_System.Data;
 
-namespace Plant_Management_System.Data.Migrations
+namespace Plant_Management_System.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211204162006_addCareLog")]
-    partial class addCareLog
+    [Migration("20211208040211_migration")]
+    partial class migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -227,6 +227,34 @@ namespace Plant_Management_System.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Plant_Management_System.Models.CareLogEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CareDone")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateOfCare")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("PlantNamePlantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("PlantNamePlantId");
+
+                    b.ToTable("CareLogEvent");
+                });
+
             modelBuilder.Entity("Plant_Management_System.Models.Plant", b =>
                 {
                     b.Property<int>("PlantId")
@@ -240,6 +268,9 @@ namespace Plant_Management_System.Data.Migrations
                     b.Property<int>("CareLogId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("GrowthMedium")
                         .HasColumnType("int");
 
@@ -252,7 +283,10 @@ namespace Plant_Management_System.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OwnerId")
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OwnerId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PotType")
@@ -266,7 +300,7 @@ namespace Plant_Management_System.Data.Migrations
 
                     b.HasKey("PlantId");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("OwnerId1");
 
                     b.ToTable("Plant");
                 });
@@ -370,6 +404,27 @@ namespace Plant_Management_System.Data.Migrations
                     b.ToTable("TradeEvent");
                 });
 
+            modelBuilder.Entity("Plant_Management_System.Models.WishList", b =>
+                {
+                    b.Property<int>("WishListId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Budget")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PlantName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("WishListId");
+
+                    b.ToTable("WishList");
+                });
+
             modelBuilder.Entity("Plant_Management_System.Models.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -434,11 +489,22 @@ namespace Plant_Management_System.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Plant_Management_System.Models.Plant", b =>
+            modelBuilder.Entity("Plant_Management_System.Models.CareLogEvent", b =>
                 {
                     b.HasOne("Plant_Management_System.Models.AppUser", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId");
+
+                    b.HasOne("Plant_Management_System.Models.Plant", "PlantName")
+                        .WithMany()
+                        .HasForeignKey("PlantNamePlantId");
+                });
+
+            modelBuilder.Entity("Plant_Management_System.Models.Plant", b =>
+                {
+                    b.HasOne("Plant_Management_System.Models.AppUser", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId1");
                 });
 
             modelBuilder.Entity("Plant_Management_System.Models.PropagationEvent", b =>
