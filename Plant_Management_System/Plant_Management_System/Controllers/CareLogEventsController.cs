@@ -87,9 +87,9 @@ namespace Plant_Management_System.Controllers
                 // convert string to DateTimeObj
                 DateTimeObj dateTime = JsonSerializer.Deserialize<DateTimeObj>(response);
 
-                careLog.Date = DateTime.Parse(dateTime.dateTime);
+                careLogInfo.care.DateOfCare = DateTime.Parse(dateTime.dateTime);
 
-                _context.Add(careLog);
+                _context.Add(careLogInfo.care);
                 careLogInfo.care.PlantName = await _context.Plant.FindAsync(careLogInfo.PlantId);
                 _context.Add(careLogInfo.care);
                 await _context.SaveChangesAsync();
