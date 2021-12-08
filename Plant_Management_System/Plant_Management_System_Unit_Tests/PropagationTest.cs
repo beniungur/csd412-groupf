@@ -6,29 +6,30 @@ namespace Plant_Management_System_Unit_Tests
 {
 	public class PropagationTest
 	{
-		// Plant Model Tests
+		// Propagation Model Tests
 		[Fact]
 		public void PropagationTypeCheck()
 		{
-			string newType = "Special Plant Prop";
-			Propagation propagationType = new Propagation();
+			DateTime newDate = new DateTime(2010, 3, 11);
+			PropagationEvent dateCheck = new PropagationEvent();
 
-			propagationType.Type = newType;
+			dateCheck.PropDate = newDate;
 
-			Assert.Equal(propagationType.Type, newType);
+			Assert.Equal(dateCheck.PropDate, newDate);
 		}
 
 		[Theory]
-		[InlineData("Special Plant Prop", "Special Plant Prop")]
-		[InlineData("Fern prop", "Fern prop")]
-		[InlineData("", "")]
-		public void PropagationTypeAcceptsAllValues(String newType, string expected)
+		
+		[InlineData("2000, 1, 1", "2000, 1, 1")]
+		[InlineData("2001, 1, 1", "2001, 1, 1")]
+		[InlineData("2003, 1, 1", "2003, 1, 1")]
+		public void PropagationTypeAcceptsAllValues(DateTime newDate, DateTime expected)
 		{
-			Propagation propagationType = new Propagation();
+			PropagationEvent dateCheck = new PropagationEvent();
 
-            propagationType.Type = newType;
+			dateCheck.PropDate = newDate;
 
-			Assert.Equal(propagationType.Type, expected);
+			Assert.Equal(dateCheck.PropDate, expected);
 		}
 	}
 }

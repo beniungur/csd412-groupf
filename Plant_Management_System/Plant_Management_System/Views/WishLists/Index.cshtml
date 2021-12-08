@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.DateAdded)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PlantName)
             </th>
             <th>
@@ -24,6 +27,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateAdded)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PlantName)
             </td>

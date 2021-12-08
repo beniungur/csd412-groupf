@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Plant_Management_System.Data;
+using Plant_Management_System.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,13 @@ namespace Plant_Management_System
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            //added//
+            services.AddCors();
+
+
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -52,6 +58,10 @@ namespace Plant_Management_System
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+
+            //added
+            app.UseCors();
 
             app.UseRouting();
 

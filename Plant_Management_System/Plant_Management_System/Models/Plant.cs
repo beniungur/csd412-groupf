@@ -71,5 +71,6 @@ namespace Plant_Management_System.Models
         public int CareLogId { get; set; }
         public int OwnerId { get; set; }
         public DateTime DateAdded { get; set; }
+        public AppUser Owner { get; set; }
     }
 }
