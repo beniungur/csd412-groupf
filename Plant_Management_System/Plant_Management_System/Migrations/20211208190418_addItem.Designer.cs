@@ -10,8 +10,8 @@ using Plant_Management_System.Data;
 namespace Plant_Management_System.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211208040211_migration")]
-    partial class migration
+    [Migration("20211208190418_addItem")]
+    partial class addItem
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -263,9 +263,6 @@ namespace Plant_Management_System.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Availability")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CareLogId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateAdded")
