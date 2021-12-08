@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Plant_Management_System.Data;
 using Plant_Management_System.Models;
+using TimeZoneConverter;
 
 namespace Plant_Management_System.Controllers
 {
@@ -72,6 +75,21 @@ namespace Plant_Management_System.Controllers
         {
             if (ModelState.IsValid)
             {
+                // get current time zone and convert to IANA
+                TimeZoneInfo localZone = TimeZoneInfo.Local;
+                string tz = TZConvert.WindowsToIana(localZone.StandardName);
+
+                // get json from api as a string
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+                string response = client.GetStringAsync(new Uri($"https://www.timeapi.io/api/Time/current/zone?timeZone={tz}")).Result;
+
+                // convert string to DateTimeObj
+                DateTimeObj dateTime = JsonSerializer.Deserialize<DateTimeObj>(response);
+
+                careLog.Date = DateTime.Parse(dateTime.dateTime);
+
+                _context.Add(careLog);
                 careLogInfo.care.PlantName = await _context.Plant.FindAsync(careLogInfo.PlantId);
                 _context.Add(careLogInfo.care);
                 await _context.SaveChangesAsync();
