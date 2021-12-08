@@ -16,8 +16,10 @@ using System.Threading.Tasks;
 
 namespace Plant_Management_System
 {
-    public class Startup
+    public class Startup      
     {
+        private IServiceCollection _services;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +30,7 @@ namespace Plant_Management_System
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            _services = services;
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -35,7 +38,6 @@ namespace Plant_Management_System
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             //added//
             services.AddCors();
-
 
 
             services.AddControllersWithViews();
@@ -75,6 +77,8 @@ namespace Plant_Management_System
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            _services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
         }
     }
 }
