@@ -36,6 +36,7 @@ namespace Plant_Management_System
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.GetAppliedMigrations();
             //added//
             services.AddCors();
 
@@ -78,7 +79,7 @@ namespace Plant_Management_System
                 endpoints.MapRazorPages();
             });
 
-            _services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
+            //_services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
         }
     }
 }
