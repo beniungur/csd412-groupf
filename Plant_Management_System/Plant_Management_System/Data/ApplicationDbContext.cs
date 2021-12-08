@@ -24,8 +24,8 @@ namespace Plant_Management_System.Data
 
         public DbSet<TradeEvent> TradeEvent { get; set; }
 
-        public DbSet<Plant_Management_System.Models.CareLogEvent> CareLogEvent { get; set; }
+        public DbSet<CareLogEvent> CareLogEvent { get; set; }
 
-        public DbSet<Plant_Management_System.Models.WishList> WishList { get; set; }
+        public DbSet<WishList> WishList { get; set; }
     }
 }

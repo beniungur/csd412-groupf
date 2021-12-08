@@ -263,9 +263,6 @@ namespace Plant_Management_System.Migrations
                     b.Property<int>("Availability")
                         .HasColumnType("int");
 
-                    b.Property<int>("CareLogId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DateAdded")
                         .HasColumnType("datetime2");
 

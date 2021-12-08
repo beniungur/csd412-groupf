@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Plant_Management_System.Migrations
 {
-    public partial class migration : Migration
+    public partial class addItem : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,7 +184,6 @@ namespace Plant_Management_System.Migrations
                     Rarity = table.Column<int>(nullable: false),
                     Availability = table.Column<int>(nullable: false),
                     LastRepotted = table.Column<DateTime>(nullable: false),
-                    CareLogId = table.Column<int>(nullable: false),
                     OwnerId = table.Column<int>(nullable: false),
                     DateAdded = table.Column<DateTime>(nullable: false),
                     OwnerId1 = table.Column<string>(nullable: true)
