@@ -19,8 +19,8 @@ namespace Plant_Management_System.Models
 
         public PropagationEvent()
         {
-            this.ParentPlant = new Plant();
-            this.PropDate = DateTime.Now;
+            //this.ParentPlant = new Plant();
+            //this.PropDate = DateTime.Now;
         }
     }
 }

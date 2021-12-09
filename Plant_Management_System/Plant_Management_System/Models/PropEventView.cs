@@ -14,8 +14,6 @@ namespace Plant_Management_System.Models
 
         public int ParentPlant { get; set;}
 
-        [DataType(DataType.Date)]
-        public DateTime PropDate { get; set; }
 
         public PropEventView()
         {

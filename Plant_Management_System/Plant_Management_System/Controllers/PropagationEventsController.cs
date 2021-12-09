@@ -67,7 +67,7 @@ namespace Plant_Management_System.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("Id,PropDate")] PropagationEvent propagationEvent)
-        public async Task<IActionResult> Create([Bind("ParentPlant,PropDate")] PropEventView propInfo)
+        public async Task<IActionResult> Create([Bind("ParentPlant,PropDate,prop")] PropEventView propInfo)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +104,7 @@ namespace Plant_Management_System.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PropDate")] PropagationEvent propagationEvent)
+        public async Task<IActionResult> Edit(int id, [Bind("ParentPlant, Id,PropDate,prop")] PropagationEvent propagationEvent)
         {
             if (id != propagationEvent.Id)
             {
