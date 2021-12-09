@@ -23,8 +23,8 @@ namespace Plant_Management_System.Models
 
         public TradeEvent()
         {
-            this.PlantToTrade = new Plant();
-            this.TradeDate = DateTime.Now;
+            //this.PlantToTrade = new Plant();
+            //this.TradeDate = DateTime.Now;
         }
     }
 }
