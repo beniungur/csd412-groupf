@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" id="form">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="DateAdded" class="control-label"></label>
@@ -27,8 +27,9 @@
                 <input asp-for="Budget" class="form-control" />
                 <span asp-validation-for="Budget" class="text-danger"></span>
             </div>
+            <input type="hidden" id="hidden" name="hidden" />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" onclick="getTimeZone()" />
             </div>
         </form>
     </div>
@@ -41,3 +42,12 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script>
+    function getTimeZone() {
+        const d = new Date();
+        let text = d.toTimeString();
+        let form = document.forms["form"];
+        let hidden = form.elements["hidden"];
+        hidden.value = text.slice(text.indexOf("(") + 1, text.indexOf(")"));
+    }
+</script>

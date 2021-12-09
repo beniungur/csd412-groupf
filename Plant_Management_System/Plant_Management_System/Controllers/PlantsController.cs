@@ -68,15 +68,14 @@ namespace Plant_Management_System.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlantId,Name,WaterNeeds,LightNeeds,GrowthMedium,PotType,Rarity,Availability,LastRepotted,CareLogId")] Plant plant)
+        public async Task<IActionResult> Create([Bind("PlantId,Name,WaterNeeds,LightNeeds,GrowthMedium,PotType,Rarity,Availability,LastRepotted,CareLogId")] Plant plant, string hidden)
         {
             if (ModelState.IsValid)
             {
-                //added
                 plant.Owner = await _userManager.GetUserAsync(User);
                 // get current time zone and convert to IANA
-                TimeZoneInfo localZone = TimeZoneInfo.Local;
-                string tz = TZConvert.WindowsToIana(localZone.StandardName);
+                // TimeZoneInfo localZone = TimeZoneInfo.Local;
+                string tz = TZConvert.WindowsToIana(hidden);
 
                 // get json from api as a string
                 HttpClient client = new HttpClient();
