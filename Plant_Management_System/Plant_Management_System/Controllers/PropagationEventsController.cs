@@ -26,7 +26,11 @@ namespace Plant_Management_System.Controllers
         // GET: PropagationEvents
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PropagationEvent.Include(r => r.ParentPlant).ToListAsync());
+            //return View(await _context.CareLogEvent.Include(l => l.PlantName).Where(o => o.Owner == owner).ToListAsync());
+
+            AppUser owner = await _userManager.GetUserAsync(User);
+            List<PropagationEvent> list = await _context.PropagationEvent.Include(r => r.ParentPlant).Where(o => o.Owner == owner).ToListAsync();
+            return View(list);
         }
 
         // GET: PropagationEvents/Details/5
@@ -72,6 +76,8 @@ namespace Plant_Management_System.Controllers
             if (ModelState.IsValid)
             {
                 propInfo.prop.ParentPlant = await _context.Plant.FindAsync(propInfo.ParentPlant);
+                propInfo.prop.Owner = await _userManager.GetUserAsync(User);
+
                 _context.Add(propInfo.prop);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
