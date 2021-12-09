@@ -6,7 +6,7 @@
 
 <h1>Edit</h1>
 
-<h4>CareLogEvent</h4>
+<h4>CareLogEvent - @Model.PlantName.Name</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,7 +15,7 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="CareDone" class="control-label"></label>
-                <select asp-for="CareDone" class="form-control"></select>
+                <select asp-for="CareDone" class="form-control"  asp-items="Html.GetEnumSelectList<CareTasks>()"></select>
                 <span asp-validation-for="CareDone" class="text-danger"></span>
             </div>
             <div class="form-group">

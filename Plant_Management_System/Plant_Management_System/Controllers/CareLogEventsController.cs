@@ -41,8 +41,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var careLogEvent = await _context.CareLogEvent
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var careLogEvent = await _context.CareLogEvent.Include(i => i.PlantName).FirstOrDefaultAsync(m => m.Id == id);
             if (careLogEvent == null)
             {
                 return NotFound();
@@ -107,7 +106,9 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var careLogEvent = await _context.CareLogEvent.FindAsync(id);
+            //var careLogEvent = await _context.CareLogEvent.FindAsync(id);
+            var careLogEvent = await _context.CareLogEvent.Include(r => r.PlantName)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (careLogEvent == null)
             {
                 return NotFound();
