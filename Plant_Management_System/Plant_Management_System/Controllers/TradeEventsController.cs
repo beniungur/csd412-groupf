@@ -73,9 +73,16 @@ namespace Plant_Management_System.Controllers
         {
             if (ModelState.IsValid)
             {
+                tradeInfo.trade.Owner = await _userManager.GetUserAsync(User);
                 tradeInfo.trade.PlantToTrade = await _context.Plant.FindAsync(tradeInfo.TradePlant);
                 tradeInfo.trade.TradeTo = await _context.AppUser.FindAsync(tradeInfo.TraderId);
                 tradeInfo.trade.PlantToReceive = await _context.Plant.FindAsync(tradeInfo.ReceivePlant);
+
+                tradeInfo.trade.PlantToTrade.Owner = tradeInfo.trade.TradeTo;
+                tradeInfo.trade.PlantToReceive.Owner = tradeInfo.trade.Owner;
+
+                _context.Update(tradeInfo.trade.PlantToTrade);
+                _context.Update(tradeInfo.trade.PlantToReceive);
                 _context.Add(tradeInfo.trade);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
