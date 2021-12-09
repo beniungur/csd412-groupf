@@ -35,8 +35,9 @@ namespace Plant_Management_System.Models
 
         public SaleEvent()
         {
-            this.PlantForSale = new Plant();
-            this.DateListed = DateTime.Now;
+           //this.PlantForSale = new Plant();
+           this.DateListed = DateTime.Now;
+           this.DateSold = DateTime.Now;
         }
     }
 }
