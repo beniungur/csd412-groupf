@@ -16,5 +16,7 @@ namespace Plant_Management_System.Models
         public string PlantName { get; set; }
 
         public double Budget { get; set; }
+
+        public AppUser User { get; set; }
     }
 }

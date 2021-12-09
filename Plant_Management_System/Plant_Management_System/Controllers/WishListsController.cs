@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,16 +18,23 @@ namespace Plant_Management_System.Controllers
     public class WishListsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private UserManager<AppUser> _userManager;
 
-        public WishListsController(ApplicationDbContext context)
+        public WishListsController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: WishLists
         public async Task<IActionResult> Index()
         {
-            return View(await _context.WishList.ToListAsync());
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                ViewBag.currUserId = user.Id;
+            }
+            return View(await _context.WishList.Include(u => u.User).ToListAsync());
         }
 
         // GET: WishLists/Details/5
@@ -46,6 +55,7 @@ namespace Plant_Management_System.Controllers
             return View(wishList);
         }
 
+        [Authorize]
         // GET: WishLists/Create
         public IActionResult Create()
         {
@@ -55,6 +65,7 @@ namespace Plant_Management_System.Controllers
         // POST: WishLists/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("WishListId,DateAdded,PlantName,Budget")] WishList wishList, string hidden)
@@ -75,6 +86,8 @@ namespace Plant_Management_System.Controllers
 
                 wishList.DateAdded = DateTime.Parse(dateTime.dateTime);
 
+                wishList.User = await _userManager.GetUserAsync(User);
+
                 _context.Add(wishList);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -82,6 +95,7 @@ namespace Plant_Management_System.Controllers
             return View(wishList);
         }
 
+        [Authorize]
         // GET: WishLists/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -101,6 +115,7 @@ namespace Plant_Management_System.Controllers
         // POST: WishLists/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("WishListId,DateAdded,PlantName,Budget")] WishList wishList)
@@ -109,6 +124,8 @@ namespace Plant_Management_System.Controllers
             {
                 return NotFound();
             }
+
+            //wishList.User = await _userManager.GetUserAsync(User);
 
             if (ModelState.IsValid)
             {
@@ -133,6 +150,7 @@ namespace Plant_Management_System.Controllers
             return View(wishList);
         }
 
+        [Authorize]
         // GET: WishLists/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -141,7 +159,13 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var wishList = await _context.WishList
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                ViewBag.currUserId = user.Id;
+            }
+
+            var wishList = await _context.WishList.Include(u => u.User)
                 .FirstOrDefaultAsync(m => m.WishListId == id);
             if (wishList == null)
             {
@@ -152,6 +176,7 @@ namespace Plant_Management_System.Controllers
         }
 
         // POST: WishLists/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
