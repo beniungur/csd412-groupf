@@ -70,13 +70,13 @@ namespace Plant_Management_System.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlantId,CareDone,DateOfCare")] CareLogEventView careLogInfo)
+        public async Task<IActionResult> Create([Bind("PlantId,CareDone,DateOfCare")] CareLogEventView careLogInfo, string hidden)
         {
             if (ModelState.IsValid)
             {
                 // get current time zone and convert to IANA
-                TimeZoneInfo localZone = TimeZoneInfo.Local;
-                string tz = TZConvert.WindowsToIana(localZone.StandardName);
+                //TimeZoneInfo localZone = TimeZoneInfo.Local;
+                string tz = TZConvert.WindowsToIana(hidden);
 
                 // get json from api as a string
                 HttpClient client = new HttpClient();
