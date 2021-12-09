@@ -29,7 +29,9 @@ namespace Plant_Management_System.Controllers
         // GET: CareLogEvents
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CareLogEvent.Include(l => l.PlantName).ToListAsync());
+            // only want it to display your plants
+            AppUser owner = await _userManager.GetUserAsync(User);
+            return View(await _context.CareLogEvent.Include(l => l.PlantName).Where(o => o.Owner == owner).ToListAsync());
 
         }
 
@@ -69,7 +71,7 @@ namespace Plant_Management_System.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PlantId,CareDone,DateOfCare")] CareLogEventView careLogInfo, string hidden)
+        public async Task<IActionResult> Create([Bind("PlantId,CareDone,DateOfCare,care")] CareLogEventView careLogInfo, string hidden)
         {
             if (ModelState.IsValid)
             {
