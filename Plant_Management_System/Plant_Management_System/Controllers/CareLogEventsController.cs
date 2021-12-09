@@ -24,14 +24,13 @@ namespace Plant_Management_System.Controllers
         {
             _context = context;
             _userManager = userManager;
-
         }
 
         // GET: CareLogEvents
         public async Task<IActionResult> Index()
         {
+            return View(await _context.CareLogEvent.Include(l => l.PlantName).ToListAsync());
 
-            return View(await _context.CareLogEvent.ToListAsync());
         }
 
         // GET: CareLogEvents/Details/5
@@ -71,7 +70,7 @@ namespace Plant_Management_System.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CareDone,DateOfCare")] CareLogEventView careLogInfo)
+        public async Task<IActionResult> Create([Bind("PlantId,CareDone,DateOfCare")] CareLogEventView careLogInfo)
         {
             if (ModelState.IsValid)
             {
@@ -89,9 +88,11 @@ namespace Plant_Management_System.Controllers
 
                 careLogInfo.care.DateOfCare = DateTime.Parse(dateTime.dateTime);
 
-                _context.Add(careLogInfo.care);
+
+                careLogInfo.care.Owner = await _userManager.GetUserAsync(User);
                 careLogInfo.care.PlantName = await _context.Plant.FindAsync(careLogInfo.PlantId);
                 _context.Add(careLogInfo.care);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

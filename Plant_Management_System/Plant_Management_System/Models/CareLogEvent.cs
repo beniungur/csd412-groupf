@@ -27,10 +27,6 @@ namespace Plant_Management_System.Models
         [DataType(DataType.Date)]
         public DateTime DateOfCare { get; set; }
 
-        public CareLogEvent()
-        {
-            this.PlantName = new Plant();
-            this.DateOfCare = DateTime.Now;
-        }
+      
     }
 }
