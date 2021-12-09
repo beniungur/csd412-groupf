@@ -69,13 +69,15 @@ namespace Plant_Management_System.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SalePlant,ListPrice,Listing,DateListed,DateSold, sale")] SaleEventView saleInfo)
+        public async Task<IActionResult> Create([Bind("SalePlant,ListPrice,Listing,DateListed,DateSold,BuyerId,sale")] SaleEventView saleInfo)
         {
             if (ModelState.IsValid)
             {
                 saleInfo.sale.PlantForSale = await _context.Plant.FindAsync(saleInfo.SalePlant);
                 saleInfo.sale.Buyer = (AppUser)await _context.Users.FindAsync(saleInfo.BuyerId);
+                saleInfo.sale.PlantForSale.Owner = saleInfo.sale.Buyer;
                 _context.Add(saleInfo.sale);
+                _context.Update(saleInfo.sale.PlantForSale);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
