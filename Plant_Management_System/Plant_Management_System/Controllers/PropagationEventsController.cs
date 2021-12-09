@@ -87,7 +87,10 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var propagationEvent = await _context.PropagationEvent.FindAsync(id);
+            //var propagationEvent = await _context.PropagationEvent.FindAsync(id);
+            var propagationEvent = await _context.PropagationEvent.Include(r => r.ParentPlant)
+                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (propagationEvent == null)
             {
                 return NotFound();
