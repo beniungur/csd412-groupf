@@ -7,14 +7,26 @@
 <h1>Details</h1>
 
 <div>
-    <h4>TradeEvent</h4>
+    <h4>Trade Event for @Html.DisplayFor(model => model.PlantToTrade.Name)</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.TradeDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.TradeDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PlantToReceive)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PlantToReceive.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TradeTo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TradeTo.UserName)
         </dd>
     </dl>
 </div>

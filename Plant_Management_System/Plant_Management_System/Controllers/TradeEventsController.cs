@@ -26,7 +26,7 @@ namespace Plant_Management_System.Controllers
         // GET: TradeEvents
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TradeEvent.ToListAsync());
+            return View(await _context.TradeEvent.Include(o => o.PlantToTrade).Include(e => e.PlantToReceive).Include(p => p.TradeTo).ToListAsync());
         }
 
         // GET: TradeEvents/Details/5
@@ -37,7 +37,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var tradeEvent = await _context.TradeEvent
+            var tradeEvent = await _context.TradeEvent.Include(o => o.PlantToTrade).Include(e => e.PlantToReceive).Include(p => p.TradeTo)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tradeEvent == null)
             {
@@ -69,7 +69,7 @@ namespace Plant_Management_System.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TradeDate")] TradeEventView tradeInfo)
+        public async Task<IActionResult> Create([Bind("Id,TradeDate, TradePlant, ReceivePlant, trade, TraderId")] TradeEventView tradeInfo)
         {
             if (ModelState.IsValid)
             {
@@ -142,7 +142,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var tradeEvent = await _context.TradeEvent
+            var tradeEvent = await _context.TradeEvent.Include(o => o.PlantToTrade)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tradeEvent == null)
             {
