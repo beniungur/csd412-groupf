@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-
 
 namespace Plant_Management_System.Models
 {
@@ -50,7 +45,7 @@ namespace Plant_Management_System.Models
         [Display(Name = "For Sale")]
         ForSale
     }
-
+    // The plant class defines the Plant Datatype, it's the central object of our app
     public class Plant
     {
         public int PlantId { get; set; }

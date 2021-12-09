@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -7,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Plant_Management_System.Data;
 using Plant_Management_System.Models;
@@ -19,7 +17,6 @@ namespace Plant_Management_System.Controllers
     {
         private readonly ApplicationDbContext _context;
         private UserManager<AppUser> _userManager;
-
         public CareLogEventsController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
@@ -31,8 +28,8 @@ namespace Plant_Management_System.Controllers
         {
             // only want it to display your plants
             AppUser owner = await _userManager.GetUserAsync(User);
-            return View(await _context.CareLogEvent.Include(l => l.PlantName).Where(o => o.Owner == owner).ToListAsync());
-
+            return View(await _context.CareLogEvent.Include(l => l.PlantName)
+                .Where(o => o.Owner == owner).ToListAsync());
         }
 
         // GET: CareLogEvents/Details/5
@@ -42,13 +39,11 @@ namespace Plant_Management_System.Controllers
             {
                 return NotFound();
             }
-
             var careLogEvent = await _context.CareLogEvent.Include(i => i.PlantName).FirstOrDefaultAsync(m => m.Id == id);
             if (careLogEvent == null)
             {
                 return NotFound();
             }
-
             return View(careLogEvent);
         }
 

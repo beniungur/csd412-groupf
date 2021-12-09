@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
+// The app user class stores the registered users
 namespace Plant_Management_System.Models
 {
     public class AppUser : IdentityUser
