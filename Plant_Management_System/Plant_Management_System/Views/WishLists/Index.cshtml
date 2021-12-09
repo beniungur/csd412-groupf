@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.User.UserName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DateAdded)
             </th>
             <th>
@@ -28,6 +31,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.DateAdded)
             </td>
             <td>
@@ -39,7 +45,14 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.WishListId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.WishListId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.WishListId">Delete</a>
+                @if (ViewBag.currUserId == item.User.Id)
+                {
+                    <a asp-action="Delete" asp-route-id="@item.WishListId">Delete</a>
+                }
+                else
+                {
+                    <a asp-action="Delete" asp-route-id="@item.WishListId">Crush Dream</a>
+                }
             </td>
         </tr>
 }
