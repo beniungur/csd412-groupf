@@ -26,7 +26,11 @@ namespace Plant_Management_System.Controllers
         // GET: TradeEvents
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TradeEvent.Include(o => o.PlantToTrade).Include(e => e.PlantToReceive).Include(p => p.TradeTo).ToListAsync());
+            AppUser owner = await _userManager.GetUserAsync(User);
+
+            // filter only trades you are involved in
+            return View(await _context.TradeEvent.Include(o => o.PlantToTrade).Include(e => e.PlantToReceive).Include(p => p.TradeTo)
+                .Where(m => m.Owner == owner || m.TradeTo == owner).ToListAsync());
         }
 
         // GET: TradeEvents/Details/5
@@ -57,6 +61,8 @@ namespace Plant_Management_System.Controllers
 
             viewModel.TraderList = await _context.AppUser.Where(u => u.Id != viewModel.trade.Owner.Id).ToListAsync();
             viewModel.PlantList = await _context.Plant.Where(o => o.Owner.Id == viewModel.trade.Owner.Id).ToListAsync();
+
+            //lists everyone else's plants at the moment
             viewModel.ReceivingPlantList = await _context.Plant.Where(o => o.Owner.Id != viewModel.trade.Owner.Id).ToListAsync();
 
 

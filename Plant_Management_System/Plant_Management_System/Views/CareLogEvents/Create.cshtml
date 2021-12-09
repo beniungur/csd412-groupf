@@ -29,11 +29,7 @@
                 </select>
                 <span asp-validation-for="care.CareDone" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="care.DateOfCare" class="control-label"></label>
-                <input asp-for="care.DateOfCare" class="form-control" />
-                <span asp-validation-for="care.DateOfCare" class="text-danger"></span>
-            </div>
+
             <input type="hidden" id="hidden" name="hidden" />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" onclick="getTimeZone()" />
