@@ -26,7 +26,7 @@ namespace Plant_Management_System.Controllers
         // GET: PropagationEvents
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PropagationEvent.ToListAsync());
+            return View(await _context.PropagationEvent.Include(r => r.ParentPlant).ToListAsync());
         }
 
         // GET: PropagationEvents/Details/5
@@ -67,7 +67,7 @@ namespace Plant_Management_System.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("Id,PropDate")] PropagationEvent propagationEvent)
-        public async Task<IActionResult> Create([Bind("Id,PropDate")] PropEventView propInfo)
+        public async Task<IActionResult> Create([Bind("ParentPlant,PropDate")] PropEventView propInfo)
         {
             if (ModelState.IsValid)
             {
