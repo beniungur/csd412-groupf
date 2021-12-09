@@ -161,7 +161,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var careLogEvent = await _context.CareLogEvent
+            var careLogEvent = await _context.CareLogEvent.Include(r => r.PlantName)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (careLogEvent == null)
             {
