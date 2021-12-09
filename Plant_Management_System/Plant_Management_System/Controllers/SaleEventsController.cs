@@ -26,7 +26,8 @@ namespace Plant_Management_System.Controllers
         // GET: SaleEvents
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SaleEvent.ToListAsync());
+            // include plant object
+            return View(await _context.SaleEvent.Include(r => r.PlantForSale).ToListAsync());
         }
 
         // GET: SaleEvents/Details/5
@@ -37,7 +38,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var saleEvent = await _context.SaleEvent
+            var saleEvent = await _context.SaleEvent.Include(r => r.PlantForSale)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (saleEvent == null)
             {
@@ -68,7 +69,7 @@ namespace Plant_Management_System.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ListPrice,Listing,DateListed,DateSold")] SaleEventView saleInfo)
+        public async Task<IActionResult> Create([Bind("SalePlant,ListPrice,Listing,DateListed,DateSold, sale")] SaleEventView saleInfo)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +103,7 @@ namespace Plant_Management_System.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ListPrice,Listing,DateListed,DateSold")] SaleEvent saleEvent)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ListPrice,Listing,DateListed,DateSold,sale")] SaleEvent saleEvent)
         {
             if (id != saleEvent.Id)
             {
@@ -140,7 +141,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var saleEvent = await _context.SaleEvent
+            var saleEvent = await _context.SaleEvent.Include(r => r.PlantForSale)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (saleEvent == null)
             {
