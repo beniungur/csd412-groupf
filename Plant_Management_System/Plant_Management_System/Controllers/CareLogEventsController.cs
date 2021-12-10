@@ -42,8 +42,7 @@ namespace Plant_Management_System.Controllers
             {
                 return NotFound();
             }
-
-            var careLogEvent = await _context.CareLogEvent.Include(i => i.PlantName).FirstOrDefaultAsync(m => m.Id == id);
+            CareLogEvent careLogEvent = await _context.CareLogEvent.Include(i => i.PlantName).FirstOrDefaultAsync(m => m.Id == id);
             if (careLogEvent == null)
             {
                 return NotFound();
@@ -108,8 +107,8 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            //var careLogEvent = await _context.CareLogEvent.FindAsync(id);
-            var careLogEvent = await _context.CareLogEvent.Include(r => r.PlantName)
+            
+            CareLogEvent careLogEvent = await _context.CareLogEvent.Include(r => r.PlantName)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (careLogEvent == null)
             {
@@ -161,7 +160,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var careLogEvent = await _context.CareLogEvent.Include(r => r.PlantName)
+            CareLogEvent careLogEvent = await _context.CareLogEvent.Include(r => r.PlantName)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (careLogEvent == null)
             {
@@ -176,7 +175,7 @@ namespace Plant_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var careLogEvent = await _context.CareLogEvent.FindAsync(id);
+            CareLogEvent careLogEvent = await _context.CareLogEvent.FindAsync(id);
             _context.CareLogEvent.Remove(careLogEvent);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

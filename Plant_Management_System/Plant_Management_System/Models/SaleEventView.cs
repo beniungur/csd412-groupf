@@ -14,12 +14,13 @@ namespace Plant_Management_System.Models
         public List<Plant> PlantList { get; set; }
 
         public int SalePlant { get; set; }
+
         public string BuyerId { get; set; }
-       
 
         public SaleEventView()
         {
             this.sale = new SaleEvent();
         }
+
     }
 }

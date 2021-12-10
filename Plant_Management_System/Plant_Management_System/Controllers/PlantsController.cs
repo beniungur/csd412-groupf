@@ -45,7 +45,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var plant = await _context.Plant
+            Plant plant = await _context.Plant
                 .FirstOrDefaultAsync(m => m.PlantId == id);
             if (plant == null)
             {
@@ -103,7 +103,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var plant = await _context.Plant.FindAsync(id);
+            Plant plant = await _context.Plant.FindAsync(id);
             if (plant == null)
             {
                 return NotFound();
@@ -156,7 +156,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var plant = await _context.Plant
+            Plant plant = await _context.Plant
                 .FirstOrDefaultAsync(m => m.PlantId == id);
             if (plant == null)
             {
@@ -172,7 +172,7 @@ namespace Plant_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var plant = await _context.Plant.FindAsync(id);
+            Plant plant = await _context.Plant.FindAsync(id);
             _context.Plant.Remove(plant);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

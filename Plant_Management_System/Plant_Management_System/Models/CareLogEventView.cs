@@ -9,8 +9,6 @@ namespace Plant_Management_System.Models
     {
         public CareLogEvent care { get; set; }
 
-        //public List<AppUser> OwnerList { get; set; }
-
         public List<Plant> PlantList { get; set; }
 
         public int PlantId { get; set; }

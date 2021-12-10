@@ -24,6 +24,7 @@ namespace Plant_Management_System.Models
 
         public CareTasks CareDone { get; set; }
 
+
         [DataType(DataType.Date)]
         public DateTime DateOfCare { get; set; }
 
