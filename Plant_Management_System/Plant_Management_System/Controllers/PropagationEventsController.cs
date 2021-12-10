@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Plant_Management_System.Data;
 using Plant_Management_System.Models;
@@ -26,8 +24,7 @@ namespace Plant_Management_System.Controllers
         // GET: PropagationEvents
         public async Task<IActionResult> Index()
         {
-            //return View(await _context.CareLogEvent.Include(l => l.PlantName).Where(o => o.Owner == owner).ToListAsync());
-
+            // filter by user who is logged in and only show theirs
             AppUser owner = await _userManager.GetUserAsync(User);
             List<PropagationEvent> list = await _context.PropagationEvent.Include(r => r.ParentPlant).Where(o => o.Owner == owner).ToListAsync();
             return View(list);
@@ -56,7 +53,8 @@ namespace Plant_Management_System.Controllers
         public async Task<IActionResult> Create()
         {
             PropEventView viewModel = new PropEventView();
-
+            // assign logged in user as the owner
+            // populate drop down plant list with only owner's plants
             viewModel.prop.Owner = await _userManager.GetUserAsync(User);
 
             viewModel.plantList = await _context.Plant.Where(o => o.Owner.Id == viewModel.prop.Owner.Id).ToListAsync();
@@ -75,6 +73,7 @@ namespace Plant_Management_System.Controllers
         {
             if (ModelState.IsValid)
             {
+                // assign parent plant object and owner object
                 propInfo.prop.ParentPlant = await _context.Plant.FindAsync(propInfo.ParentPlant);
                 propInfo.prop.Owner = await _userManager.GetUserAsync(User);
 
@@ -94,8 +93,7 @@ namespace Plant_Management_System.Controllers
             }
 
             // filter by parent plant
-            PropagationEvent propagationEvent = await _context.PropagationEvent.Include(r => r.ParentPlant)
-                 .FirstOrDefaultAsync(m => m.Id == id);
+            PropagationEvent propagationEvent = await _context.PropagationEvent.Include(r => r.ParentPlant).FirstOrDefaultAsync(m => m.Id == id);
 
             if (propagationEvent == null)
             {

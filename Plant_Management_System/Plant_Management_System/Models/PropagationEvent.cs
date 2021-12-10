@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Plant_Management_System.Models
 {
+    //// This class defines objects that will store plant propagations
     public class PropagationEvent
     {
         public int Id { get; set; }
-
         public AppUser Owner { get; set; }
-
         public Plant ParentPlant { get; set; }
 
 

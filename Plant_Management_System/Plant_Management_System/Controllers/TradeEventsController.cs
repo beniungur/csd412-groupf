@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Plant_Management_System.Data;
 using Plant_Management_System.Models;
@@ -41,8 +39,9 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var tradeEvent = await _context.TradeEvent.Include(o => o.PlantToTrade).Include(e => e.PlantToReceive).Include(p => p.TradeTo)
+            TradeEvent tradeEvent = await _context.TradeEvent.Include(o => o.PlantToTrade).Include(e => e.PlantToReceive).Include(p => p.TradeTo)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (tradeEvent == null)
             {
                 return NotFound();
@@ -59,12 +58,13 @@ namespace Plant_Management_System.Controllers
 
             viewModel.trade.Owner = await _userManager.GetUserAsync(User);
 
+            // filter tradeto anyone except owner
             viewModel.TraderList = await _context.AppUser.Where(u => u.Id != viewModel.trade.Owner.Id).ToListAsync();
+
             viewModel.PlantList = await _context.Plant.Where(o => o.Owner.Id == viewModel.trade.Owner.Id).ToListAsync();
 
             //lists everyone else's plants at the moment
             viewModel.ReceivingPlantList = await _context.Plant.Where(o => o.Owner.Id != viewModel.trade.Owner.Id).ToListAsync();
-
 
             return View(viewModel);
         }
@@ -84,8 +84,24 @@ namespace Plant_Management_System.Controllers
                 tradeInfo.trade.TradeTo = await _context.AppUser.FindAsync(tradeInfo.TraderId);
                 tradeInfo.trade.PlantToReceive = await _context.Plant.FindAsync(tradeInfo.ReceivePlant);
 
+                // swap plant owners
                 tradeInfo.trade.PlantToTrade.Owner = tradeInfo.trade.TradeTo;
                 tradeInfo.trade.PlantToReceive.Owner = tradeInfo.trade.Owner;
+
+                // change carelogs' owners
+                List<CareLogEvent> careLog = await _context.CareLogEvent.Include(i => i.PlantName).Where(c => c.PlantName.PlantId == tradeInfo.TradePlant).ToListAsync();
+                foreach (CareLogEvent log in careLog)
+                {
+                    log.Owner = tradeInfo.trade.TradeTo;
+                    _context.Update(log);
+                }
+
+                careLog = await _context.CareLogEvent.Include(i => i.PlantName).Where(c => c.PlantName.PlantId == tradeInfo.ReceivePlant).ToListAsync();
+                foreach (CareLogEvent log in careLog)
+                {
+                    log.Owner = tradeInfo.trade.Owner;
+                    _context.Update(log);
+                }
 
                 _context.Update(tradeInfo.trade.PlantToTrade);
                 _context.Update(tradeInfo.trade.PlantToReceive);
@@ -155,8 +171,9 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var tradeEvent = await _context.TradeEvent.Include(o => o.PlantToTrade)
+            TradeEvent tradeEvent = await _context.TradeEvent.Include(o => o.PlantToTrade)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (tradeEvent == null)
             {
                 return NotFound();
@@ -170,7 +187,7 @@ namespace Plant_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tradeEvent = await _context.TradeEvent.FindAsync(id);
+            TradeEvent tradeEvent = await _context.TradeEvent.FindAsync(id);
             _context.TradeEvent.Remove(tradeEvent);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

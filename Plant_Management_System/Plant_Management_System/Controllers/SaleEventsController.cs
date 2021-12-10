@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Plant_Management_System.Data;
 using Plant_Management_System.Models;
@@ -38,8 +36,9 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var saleEvent = await _context.SaleEvent.Include(r => r.PlantForSale)
+            SaleEvent saleEvent = await _context.SaleEvent.Include(r => r.PlantForSale)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (saleEvent == null)
             {
                 return NotFound();
@@ -56,10 +55,10 @@ namespace Plant_Management_System.Controllers
 
             viewModel.sale.Owner = await _userManager.GetUserAsync(User);
 
+            // filter to all users except current user
             viewModel.BuyerList = await _context.AppUser.Where(u => u.Id != viewModel.sale.Owner.Id).ToListAsync();
             viewModel.PlantList = await _context.Plant.Where(o => o.Owner.Id == viewModel.sale.Owner.Id).ToListAsync();
             
-
             return View(viewModel);
         }
 
@@ -76,6 +75,15 @@ namespace Plant_Management_System.Controllers
                 saleInfo.sale.PlantForSale = await _context.Plant.FindAsync(saleInfo.SalePlant);
                 saleInfo.sale.Buyer = (AppUser)await _context.Users.FindAsync(saleInfo.BuyerId);
                 saleInfo.sale.PlantForSale.Owner = saleInfo.sale.Buyer;
+
+                // change carelogs' owners
+                List<CareLogEvent> careLog = await _context.CareLogEvent.Include(i => i.PlantName).Where(c => c.PlantName.PlantId == saleInfo.SalePlant).ToListAsync();
+                foreach (CareLogEvent log in careLog)
+                {
+                    log.Owner = saleInfo.sale.Buyer;
+                    _context.Update(log);
+                }
+
                 _context.Add(saleInfo.sale);
                 _context.Update(saleInfo.sale.PlantForSale);
                 await _context.SaveChangesAsync();
@@ -92,7 +100,8 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var saleEvent = await _context.SaleEvent.FindAsync(id);
+            SaleEvent saleEvent = await _context.SaleEvent.FindAsync(id);
+
             if (saleEvent == null)
             {
                 return NotFound();
@@ -143,8 +152,9 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var saleEvent = await _context.SaleEvent.Include(r => r.PlantForSale)
+            SaleEvent saleEvent = await _context.SaleEvent.Include(r => r.PlantForSale)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (saleEvent == null)
             {
                 return NotFound();
@@ -158,7 +168,7 @@ namespace Plant_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var saleEvent = await _context.SaleEvent.FindAsync(id);
+            SaleEvent saleEvent = await _context.SaleEvent.FindAsync(id);
             _context.SaleEvent.Remove(saleEvent);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

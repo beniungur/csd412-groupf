@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -7,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Plant_Management_System.Data;
 using Plant_Management_System.Models;
@@ -31,6 +29,7 @@ namespace Plant_Management_System.Controllers
         {
             // do NOT filter this one-- want to see everyone's wishlist items
             AppUser user = await _userManager.GetUserAsync(User);
+
             if (user != null)
             {
                 ViewBag.currUserId = user.Id;
@@ -87,6 +86,7 @@ namespace Plant_Management_System.Controllers
 
                 wishList.DateAdded = DateTime.Parse(dateTime.dateTime);
 
+                // assign logged in person as the owner
                 wishList.User = await _userManager.GetUserAsync(User);
 
                 _context.Add(wishList);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -7,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Plant_Management_System.Data;
 using Plant_Management_System.Models;
@@ -19,7 +17,6 @@ namespace Plant_Management_System.Controllers
     {
         private readonly ApplicationDbContext _context;
         private UserManager<AppUser> _userManager;
-
         public CareLogEventsController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
@@ -31,8 +28,8 @@ namespace Plant_Management_System.Controllers
         {
             // only want it to display your plants
             AppUser owner = await _userManager.GetUserAsync(User);
-            return View(await _context.CareLogEvent.Include(l => l.PlantName).Where(o => o.Owner == owner).ToListAsync());
-
+            return View(await _context.CareLogEvent.Include(l => l.PlantName)
+                .Where(o => o.Owner == owner).ToListAsync());
         }
 
         // GET: CareLogEvents/Details/5
@@ -42,12 +39,13 @@ namespace Plant_Management_System.Controllers
             {
                 return NotFound();
             }
+
             CareLogEvent careLogEvent = await _context.CareLogEvent.Include(i => i.PlantName).FirstOrDefaultAsync(m => m.Id == id);
+
             if (careLogEvent == null)
             {
                 return NotFound();
             }
-
             return View(careLogEvent);
         }
 
@@ -57,6 +55,7 @@ namespace Plant_Management_System.Controllers
         {
             CareLogEventView viewModel = new CareLogEventView();
 
+            // get user & filter by owner so only your care logs show up
             viewModel.care.Owner = await _userManager.GetUserAsync(User);
 
             viewModel.PlantList = await _context.Plant.Where(o => o.Owner.Id == viewModel.care.Owner.Id).ToListAsync();
@@ -88,7 +87,7 @@ namespace Plant_Management_System.Controllers
 
                 careLogInfo.care.DateOfCare = DateTime.Parse(dateTime.dateTime);
 
-
+                // assign user as owner and assign existing plant object as plant
                 careLogInfo.care.Owner = await _userManager.GetUserAsync(User);
                 careLogInfo.care.PlantName = await _context.Plant.FindAsync(careLogInfo.PlantId);
                 _context.Add(careLogInfo.care);

@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-
 
 namespace Plant_Management_System.Models
 {
@@ -60,33 +55,33 @@ namespace Plant_Management_System.Models
     public class Plant
     {
         public int PlantId { get; set; }
-
+      
         public string Name { get; set; }
-
+      
         [Display(Name = "Water Needs")]
         public WaterNeed WaterNeeds { get; set; }
-
+      
         [Display(Name = "Light Needs")]
         public LightNeed LightNeeds { get; set; }
-
+      
         [Display(Name = "Growth Medium")]
         public GrowthMediums GrowthMedium { get; set; }
-
+      
         [Display(Name = "Pot Type")]
         public PotTypes PotType { get; set; }
-
+      
         public Rarities Rarity { get; set; }
-
+      
         public Availabilities Availability { get; set; }
-
+      
         [DataType(DataType.Date)]
         [Display(Name = "Last Repotted")]
         public DateTime LastRepotted { get; set; }
-
+      
         public int OwnerId { get; set; }
-
+      
         public DateTime DateAdded { get; set; }
-
+      
         public AppUser Owner { get; set; }
 
     }
