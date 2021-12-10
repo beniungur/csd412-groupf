@@ -38,7 +38,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var propagationEvent = await _context.PropagationEvent.Include(r => r.ParentPlant)
+            PropagationEvent propagationEvent = await _context.PropagationEvent.Include(r => r.ParentPlant)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (propagationEvent == null)
             {
@@ -93,8 +93,7 @@ namespace Plant_Management_System.Controllers
             }
 
             // filter by parent plant
-            var propagationEvent = await _context.PropagationEvent.Include(r => r.ParentPlant)
-                 .FirstOrDefaultAsync(m => m.Id == id);
+            PropagationEvent propagationEvent = await _context.PropagationEvent.Include(r => r.ParentPlant).FirstOrDefaultAsync(m => m.Id == id);
 
             if (propagationEvent == null)
             {
@@ -147,7 +146,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var propagationEvent = await _context.PropagationEvent.Include(r => r.ParentPlant)
+            PropagationEvent propagationEvent = await _context.PropagationEvent.Include(r => r.ParentPlant)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (propagationEvent == null)
             {
@@ -162,7 +161,7 @@ namespace Plant_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var propagationEvent = await _context.PropagationEvent.FindAsync(id);
+            PropagationEvent propagationEvent = await _context.PropagationEvent.FindAsync(id);
             _context.PropagationEvent.Remove(propagationEvent);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

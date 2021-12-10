@@ -10,13 +10,14 @@ namespace Plant_Management_System.Models
         public AppUser Owner { get; set; }
         public Plant ParentPlant { get; set; }
 
+
         [DataType(DataType.Date)]
         public DateTime PropDate { get; set; }
 
         public PropagationEvent()
         {
-            //this.ParentPlant = new Plant();
-            //this.PropDate = DateTime.Now;
+            
         }
+
     }
 }

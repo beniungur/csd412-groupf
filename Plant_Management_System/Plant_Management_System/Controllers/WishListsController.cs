@@ -28,7 +28,8 @@ namespace Plant_Management_System.Controllers
         public async Task<IActionResult> Index()
         {
             // do NOT filter this one-- want to see everyone's wishlist items
-            var user = await _userManager.GetUserAsync(User);
+            AppUser user = await _userManager.GetUserAsync(User);
+
             if (user != null)
             {
                 ViewBag.currUserId = user.Id;
@@ -44,7 +45,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var wishList = await _context.WishList
+            WishList wishList = await _context.WishList
                 .FirstOrDefaultAsync(m => m.WishListId == id);
             if (wishList == null)
             {
@@ -104,7 +105,7 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var wishList = await _context.WishList.FindAsync(id);
+            WishList wishList = await _context.WishList.FindAsync(id);
             if (wishList == null)
             {
                 return NotFound();
@@ -159,13 +160,13 @@ namespace Plant_Management_System.Controllers
                 return NotFound();
             }
 
-            var user = await _userManager.GetUserAsync(User);
+            AppUser user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
                 ViewBag.currUserId = user.Id;
             }
 
-            var wishList = await _context.WishList.Include(u => u.User)
+            WishList wishList = await _context.WishList.Include(u => u.User)
                 .FirstOrDefaultAsync(m => m.WishListId == id);
             if (wishList == null)
             {
@@ -181,7 +182,7 @@ namespace Plant_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var wishList = await _context.WishList.FindAsync(id);
+            WishList wishList = await _context.WishList.FindAsync(id);
             _context.WishList.Remove(wishList);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

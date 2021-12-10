@@ -9,12 +9,14 @@ namespace Plant_Management_System.Models
         Medium,
         Low
     }
+
     public enum LightNeed
     {
         Direct,
         Indirect,
         Minimal
     }
+
     public enum GrowthMediums
     {
         Soil,
@@ -24,6 +26,7 @@ namespace Plant_Management_System.Models
         CactusMix,
         Soilless
     }
+
     public enum PotTypes
     {
         Plastic,
@@ -31,6 +34,7 @@ namespace Plant_Management_System.Models
         Metal,
         Other
     }
+
     public enum Rarities
     {
         Rare,
@@ -38,6 +42,7 @@ namespace Plant_Management_System.Models
         SemiRare,
         Common
     }
+
     public enum Availabilities
     {
         [Display(Name = "Not For Sale")]
@@ -45,26 +50,39 @@ namespace Plant_Management_System.Models
         [Display(Name = "For Sale")]
         ForSale
     }
+
     // The plant class defines the Plant Datatype, it's the central object of our app
     public class Plant
     {
         public int PlantId { get; set; }
+      
         public string Name { get; set; }
+      
         [Display(Name = "Water Needs")]
         public WaterNeed WaterNeeds { get; set; }
+      
         [Display(Name = "Light Needs")]
         public LightNeed LightNeeds { get; set; }
+      
         [Display(Name = "Growth Medium")]
         public GrowthMediums GrowthMedium { get; set; }
+      
         [Display(Name = "Pot Type")]
         public PotTypes PotType { get; set; }
+      
         public Rarities Rarity { get; set; }
+      
         public Availabilities Availability { get; set; }
+      
         [DataType(DataType.Date)]
         [Display(Name = "Last Repotted")]
         public DateTime LastRepotted { get; set; }
+      
         public int OwnerId { get; set; }
+      
         public DateTime DateAdded { get; set; }
+      
         public AppUser Owner { get; set; }
+
     }
 }
