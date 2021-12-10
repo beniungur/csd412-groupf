@@ -37,7 +37,8 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 <script>
-    function getTimeZone() {
+    function getTimeZone()
+    {
         const d = new Date();
         let text = d.toTimeString();
         let form = document.forms["form"];
