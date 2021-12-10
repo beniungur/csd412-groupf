@@ -13,8 +13,6 @@ namespace Plant_Management_System.Models
       
         public string OwnerName { get; set; }
       
-        public string OwnerName { get; set; }
-      
         public PropEventView()
         {
             this.prop = new PropagationEvent();
