@@ -27,6 +27,7 @@ namespace Plant_Management_System.Controllers
         // GET: WishLists
         public async Task<IActionResult> Index()
         {
+            // do NOT filter this one-- want to see everyone's wishlist items
             var user = await _userManager.GetUserAsync(User);
             if (user != null)
             {
@@ -84,6 +85,7 @@ namespace Plant_Management_System.Controllers
 
                 wishList.DateAdded = DateTime.Parse(dateTime.dateTime);
 
+                // assign logged in person as the owner
                 wishList.User = await _userManager.GetUserAsync(User);
 
                 _context.Add(wishList);
